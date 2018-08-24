@@ -1,0 +1,100 @@
+﻿@model RgbLedMvc.Models.NewViewModel
+@using RgbLedMvc.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="ASP.NET MVC Led Projesi">
+    <meta name="author" content="">
+    <!-- Buraya dilediğin ikonu koy -->
+    <link rel="icon" href="~/Images/wordpress-logo.png">
+
+    <title>ASP.NET MVC ve Arduino ile Rgb Led Kontrolü</title>
+
+    <!-- Buraya min.css' i koy -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Buraya starter-template'i koyacaksın -->
+    <link href="~/Content/starter-template.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">ASP.NET MVC Led Projesi</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Ana Sayfa<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/VeriTabani">Veri Tabanı</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Led Kontrol Ekranı</h1>
+    </div>
+
+    <main role="main" class="container">
+
+        <div class="container w-25">
+            @using (Html.BeginForm("DbEkle", "Home", FormMethod.Post))
+            {
+                <form>
+                    <p class="text-center font-weight-bold">Renk Seçimi</p>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text col-sm-12"><img src="~/Images/baseline-color_lens-24px.svg" /></span>
+                        </div>
+                        @{
+                            // Eğer Leds tablosunun Color kolonu boş değilse, color inputta en son rengi gösteriyorum
+                            if (Model.Led.Color != null)
+                            {
+                                <input type="color" name="Renk" value="@Model.Led.Color" class="form-control">
+                            }
+                            // Boşsa Rgb Color tablosundan son rengi çekiyorum. Çünkü o tablodan hiçbir veri butonla silinmiyor
+                            else
+                            {
+                                <input type="color" name="Renk" value="@Model.SonRenk.LastColor" class="form-control">
+                            }
+                        }
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-dark col-sm-12">Aç</button>
+                    </div>
+                </form>
+            }
+            <div>
+                @using (Html.BeginForm("Kapama", "Home", FormMethod.Post))
+                {
+                    // Led kapama butonu
+                    <button type="submit" value="Kapat" name="Kapa" class="btn btn-dark col-sm-12">Kapa</button>
+                }
+            </div>
+        </div>
+
+
+
+    </main><!-- /.container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

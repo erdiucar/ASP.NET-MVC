@@ -1,0 +1,116 @@
+﻿@model IEnumerable<RgbLedMvc.Models.Led>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="MVC Led Projesi Veri Tabanı">
+    <meta name="author" content="">
+    <!-- Buraya dilediğin ikonu koy -->
+    <link rel="icon" href="~/Images/wordpress-logo.png">
+
+    <title>ASP.NET MVC ve Arduino ile Rgb Led Kontrolü</title>
+
+    <!-- Buraya min.css' i koy -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Buraya starter-template'i koyacaksın -->
+    <link href="~/Content/starter-template.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">ASP.NET MVC Led Projesi</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Ana Sayfa<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/VeriTabani">Veri Tabanı</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">Veri Tabanı Ekranı</h1>
+</div>
+
+
+
+<main role="main" class="container">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Led Durumu</th>
+                <th scope="col">Tarih</th>
+                <th scope="col">Renk</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{// Listeyi foreach döngüsüyle tabloya yazdırıyorum
+            int count = 1;
+
+            foreach (var item in Model)
+             {
+                 <tr>
+                     <th scope="row">@count</th>
+                     @{
+                         if (item.IsOpen)
+                         {
+                             <td>Led Açık</td>
+                         }
+                         else
+                         {
+                             <td>Led Kapalı</td>
+                         }
+                     }
+                     <td>@item.Time</td>
+                     @{
+                         if (item.IsOpen)
+                         {
+                             <td style="background-color: @item.Color"></td>
+                         }
+                         else
+                         {
+                             <td>Kapalı</td>
+                         }
+                     }
+                 </tr>
+
+                 count++;
+             }
+        }
+        </tbody>
+    </table>
+    <div class="container w-25">
+        @using (Html.BeginForm("DbSil", "VeriTabani", FormMethod.Post))
+        {
+            // Veri tabanını temizle butonu
+            <button type="submit" value="Sil" name="DbSilme" class="btn btn-dark col-sm-12">Veri Tabanını Temizle</button>
+        }
+    </div>
+</main>
+
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
