@@ -1,6 +1,6 @@
 # ASP.NET-MVC
 
-ASP.NET MVC Projects
+ASP.NET MVC Projeleri
 
 www.erdiucar.com
 
